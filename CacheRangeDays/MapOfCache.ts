@@ -1,9 +1,9 @@
-import ItemCache from '@main/DataAccessLayer/Web100PlatformStorage/CompanyDays/ItemCache';
+import ItemCache from '@main/ItemCache';
 import CompanyDays, { WorkingDayRawDTO } from '@models/CompanyDays';
 import moment, { MomentInput } from 'moment';
-import Api2CompanyDaysController from '@components/api2Web100/Api2CompanyDaysController';
+import Api2CompanyDaysController from '@Api2CompanyDaysController';
 import CacheFsStore from '@main/cache/CacheFsStore';
-import * as config from '@main/DataAccessLayer/Web100PlatformStorage/CompanyDays/CompanyDaysCache.config.json';
+import * as config from '@main/CacheRangeDays.config.json';
 
 export default class MapOfCache {
     private _itemsCache: ItemCache[];
@@ -101,7 +101,7 @@ export default class MapOfCache {
                     throw new Error(msg)
                 }
             })
-            global.logger.info(`Get company days from cache: All days get from cache; Range ${moment(this._itemsCache[0].date).format('DD.MM.YYYY')} - 
+            global.logger.info(`Get days from cache: All days get from cache; Range ${moment(this._itemsCache[0].date).format('DD.MM.YYYY')} - 
                      ${moment(this._itemsCache[this._itemsCache.length - 1].date).format('DD.MM.YYYY')}`)
             return new CompanyDays(companyDays)
         }

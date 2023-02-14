@@ -2,7 +2,6 @@ import moment from 'moment';
 import ItemCache from '@main/DataAccessLayer/Web100PlatformStorage/CompanyDays/ItemCache';
 import MapOfCache from '@main/DataAccessLayer/Web100PlatformStorage/CompanyDays/MapOfCache';
 import CompanyDays from '@models/CompanyDays';
-import { RequestTimeTracker } from '@main/logger/RequestTimeTracker';
 
 
 export default class CompanyDaysCache {
@@ -12,19 +11,10 @@ export default class CompanyDaysCache {
      * @param dateEnd
      */
     static async get(dateStart: Date, dateEnd: Date = dateStart): Promise<CompanyDays> {
-        // TODO need rewrite logging, temporary solution
-        const requestTimeTracker = new RequestTimeTracker(undefined, 'cached data', 'Get company days from cache');
-        requestTimeTracker.setAdditionalData(`Date start: ${moment(dateStart).format('DD.MM.YYYY')}, Date end: ${moment(dateEnd).format('DD.MM.YYYY')}`)
-        const timeStart = RequestTimeTracker.getTimeStart();
 
         const mapOfCache = new MapOfCache(await this.createItemsCache(dateStart, dateEnd))
 
-        const companyDays = mapOfCache.buildResponse()
-
-        requestTimeTracker.calcRequestDuration(timeStart);
-        requestTimeTracker.printToLog();
-
-        return companyDays
+        return mapOfCache.buildResponse()
     }
 
     /**

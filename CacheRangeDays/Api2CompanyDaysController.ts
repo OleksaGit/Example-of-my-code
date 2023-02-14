@@ -1,22 +1,11 @@
-import ApiWeb100ControllerHelper from '@components/helpers/ApiWeb100ControllerHelper';
+import ApiWeb100ControllerHelper from '@components/ApiWeb100ControllerHelper';
 import { WorkingDayRawDTO } from '@models/CompanyDays';
 import ApiConnectorService from '@components/apiConnectors/ApiConnectorService';
 import globalConfig from '@main/config';
 import DateApiFormat from '@helpers/DateApiFormat';
-import { Stages } from '@main/types';
-import configBotCredentials from '@main/config';
-
-/**
- * WORKING_DAY - рабочий день
- * WEEKEND_DAY - выходной
- * HOLIDAY - праздник
- */
 
 export default class Api2CompanyDaysController {
     /**
-     * ВАЖНО! Тут даты в utc, а во многих местах нам нужны локальные. На выходе - неправильный день, если передано время
-     * после 22:00. Пока нормального решения нет, следует искать примеры конвертации по строке "moment.utc(".
-     *
      * @param {null|Date} timeMin
      * @param {null|Date} timeMax
      * @returns {Promise<CompanyDays>}
